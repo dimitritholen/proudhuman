@@ -1,0 +1,17 @@
+{
+  "name": "proudhuman",
+  "description": "Map the human's role in a merged pull request from Claude Code session transcripts: who the accountable human is, which turns framed, constrained, verified or rescued the work, which added lines have no origin in AI-emitted text, and which prompts were verbatim earlier AI output. Developer-facing self-review, not a scorecard.",
+  "version": "0.1.2",
+  "author": {
+    "name": "Dimitri Tholen"
+  },
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "transcripts",
+    "accountability",
+    "attribution",
+    "self-review",
+    "pull-request"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "proudhuman",
+  "metadata": {
+    "description": "Map the human's role in a merged pull request from Claude Code session transcripts. Developer-facing self-review."
+  },
+  "owner": {
+    "name": "Dimitri Tholen"
+  },
+  "plugins": [
+    {
+      "name": "proudhuman",
+      "source": "./",
+      "description": "Per PR: the accountable human, the turns that framed, constrained, verified or rescued the work, added lines with no AI origin, and prompts that were verbatim earlier AI output."
+    }
+  ]
+}
