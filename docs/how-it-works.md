@@ -43,7 +43,7 @@ Six chapters, each headed by a scene: the Spark, the Steering (with the session 
 
 Charts are inline SVG rendered by the script from the beats. Timeline: one band per session, Claude's tool-call density as a hatched band, your marks on a thread above it, distinguished by shape (star spark, dot steer, ring question, diamond judgment, triangle verification), commits as ticks, the ship as a flag. Composition: one stacked bar for the PR plus the top eight files, segments written by Claude, moved, said in chat, no-origin. Judgment strip: the judgments in order, linked to their scenes.
 
-Colours come from CSS custom properties: the human's marks in the accent, Claude's material in graphite, so light, dark and print share one file. No JavaScript; expands use `<details>`, hover detail uses `title`.
+Colours come from CSS custom properties defined once with `light-dark()`: the human's marks in the accent, Claude's material in graphite, so light, dark and print share one file. The theme selector in the masthead (auto, light, dark) is three radio buttons and a `:has()` rule on the root that sets `color-scheme`; the choice lives for the page view and is not remembered, because the page runs no script. No JavaScript anywhere; expands use `<details>`, hover detail uses `title`.
 
 ## Scenes
 

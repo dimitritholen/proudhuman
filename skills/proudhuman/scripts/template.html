@@ -5,32 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{title_text}}</title>
 <style>
+/* Tokens are defined once with light-dark(); which side applies follows the
+   root's color-scheme. Auto follows the system; the theme selector in the
+   masthead forces light or dark with CSS alone (no script). */
 :root {
-  --paper: #F5F4F0;
-  --ink: #1E262E;
-  --ink-2: #5C6570;
-  --rule: #D9D8D2;
-  --accent: {{accent_light}};
-  --graphite: #8A8F98;
-  --graphite-soft: #C9CCD1;
-  --paper-2: #ECEBE6;
+  --paper: light-dark(#F5F4F0, #161A1F);
+  --ink: light-dark(#1E262E, #E6E4DF);
+  --ink-2: light-dark(#5C6570, #A3A9B1);
+  --rule: light-dark(#D9D8D2, #2C333B);
+  --accent: light-dark({{accent_light}}, {{accent_dark}});
+  --graphite: light-dark(#8A8F98, #5A6068);
+  --graphite-soft: light-dark(#C9CCD1, #3A4048);
+  --paper-2: light-dark(#ECEBE6, #1E242B);
   --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
   --sans: system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
   color-scheme: light dark;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #161A1F;
-    --ink: #E6E4DF;
-    --ink-2: #A3A9B1;
-    --rule: #2C333B;
-    --accent: {{accent_dark}};
-    --graphite: #5A6068;
-    --graphite-soft: #3A4048;
-    --paper-2: #1E242B;
-  }
-}
+:root:has(#theme-light:checked) { color-scheme: light; }
+:root:has(#theme-dark:checked) { color-scheme: dark; }
+
+/* theme selector */
+.theme { position: absolute; top: 0; right: 0; display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; padding: 2px; font-size: 0.78rem; line-height: 1; color: var(--ink-2); }
+.theme input { position: absolute; opacity: 0; width: 0; height: 0; }
+.theme label { padding: 0.35rem 0.7rem; border-radius: 999px; cursor: pointer; }
+.theme input:checked + label { background: var(--paper-2); color: var(--ink); }
+.theme input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 1px; }
 * { box-sizing: border-box; }
 html { background: var(--paper); }
 body {
@@ -51,7 +51,8 @@ pre { white-space: pre-wrap; word-break: break-word; margin: 0.6rem 0 0; padding
 .page { max-width: 46rem; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
 
 /* masthead */
-.masthead { padding: 0 0 2.5rem; border-bottom: 1px solid var(--rule); margin-bottom: 3rem; }
+.masthead { position: relative; padding: 0 0 2.5rem; border-bottom: 1px solid var(--rule); margin-bottom: 3rem; }
+.kicker { padding-right: 12rem; }
 .kicker { font-family: var(--serif); font-style: italic; color: var(--ink-2); margin: 0 0 1.4rem; font-size: 1.05rem; }
 .ident { color: var(--ink-2); font-size: 0.95rem; margin: 0 0 0.35rem; }
 .ident .subject { color: var(--ink); }
@@ -186,8 +187,14 @@ details.more[open] ~ ol.beats li.beyond { display: list-item; }
   .footnotes ol { columns: 1; }
 }
 
+@media (max-width: 640px) {
+  .theme { position: static; margin-bottom: 1rem; }
+  .kicker { padding-right: 0; }
+}
+
 @media print {
-  :root { --paper: #fff; --ink: #000; --ink-2: #444; --rule: #bbb; --graphite: #777; --graphite-soft: #ddd; --paper-2: #f2f2f2; }
+  :root { color-scheme: light; --paper: #fff; --ink: #000; --ink-2: #444; --rule: #bbb; --graphite: #777; --graphite-soft: #ddd; --paper-2: #f2f2f2; }
+  .theme { display: none; }
   body { font-size: 11pt; }
   .page { max-width: none; padding: 0; }
   .chapter { break-before: page; border-bottom: 0; }
@@ -207,6 +214,11 @@ details.more[open] ~ ol.beats li.beyond { display: list-item; }
 <body>
 <main class="page">
   <header class="masthead">
+    <fieldset class="theme" aria-label="{{theme_label}}" style="margin:0;border-width:1px">
+      <input type="radio" name="theme" id="theme-auto" checked><label for="theme-auto">{{theme_auto}}</label>
+      <input type="radio" name="theme" id="theme-light"><label for="theme-light">{{theme_light}}</label>
+      <input type="radio" name="theme" id="theme-dark"><label for="theme-dark">{{theme_dark}}</label>
+    </fieldset>
     <p class="kicker">{{kicker}}</p>
     <p class="ident">{{ident}} <span class="subject">{{subject}}</span> <span class="repo">in {{repo}}</span></p>
     <h1>{{title}}</h1>

@@ -4,6 +4,7 @@
     "masthead_pr": "Pull request",
     "masthead_branch": "Branch",
     "masthead_kicker": "The story of one pull request, told from the record",
+    "theme": {"label": "Theme", "auto": "Auto", "light": "Light", "dark": "Dark"},
     "chapters": {
       "spark": "The Spark",
       "steering": "The Steering",
@@ -65,6 +66,7 @@
     "masthead_pr": "Pull request",
     "masthead_branch": "Branch",
     "masthead_kicker": "Het verhaal van één pull request, verteld uit het verslag",
+    "theme": {"label": "Thema", "auto": "Automatisch", "light": "Licht", "dark": "Donker"},
     "chapters": {
       "spark": "De Vonk",
       "steering": "Het Bijsturen",
