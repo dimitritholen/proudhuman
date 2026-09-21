@@ -92,8 +92,14 @@ class Cites:
     def footnotes(self, chrome: dict) -> str:
         if not self.order:
             return ""
-        items = "".join(f'<li id="fn-{i + 1}"><span class="fn-n">{i + 1}</span> {escape(c)}</li>' for i, c in enumerate(self.order))
-        return f'<section class="footnotes" aria-label="{escape(chrome["citations"])}"><h2>{escape(chrome["citations"])}</h2><p class="hint">{escape(chrome["citation_hint"])}</p><ol>{items}</ol></section>'
+        def short(c: str) -> str:
+            sid, _, line = c.rpartition(":")
+            return f"{sid[:8]}:{line}"
+
+        items = "".join(f'<li id="fn-{i + 1}"><span class="fn-n">{i + 1}</span> <span title="{escape(c)}">{escape(short(c))}</span></li>' for i, c in enumerate(self.order))
+        sessions = sorted({c.rpartition(":")[0] for c in self.order})
+        key = " ".join(f'<span class="fn-key"><span class="mono">{escape(s[:8])}</span> {escape(s)}</span>' for s in sessions)
+        return f'<footer class="footnotes" aria-label="{escape(chrome["citations"])}"><h2>{escape(chrome["citations"])}</h2><p class="hint">{escape(chrome["citation_hint"])}</p><ol>{items}</ol><p class="fn-keys">{key}</p></footer>'
 
 
 # ---------------------------------------------------------------- slots
@@ -123,13 +129,12 @@ def scene(name: str, badge: int | None, muted: bool) -> str:
     svg = re.sub(r"<\?xml[^>]*\?>", "", svg).strip()
     svg = re.sub(r'\bid="title"', f'id="title-{name}"', svg, count=1)
     svg = re.sub(r'aria-labelledby="title"', f'aria-labelledby="title-{name}"', svg, count=1)
-    if badge is None:
-        svg = re.sub(r'<g id="badge".*?</g>', "", svg, count=1, flags=re.S)
-    else:
-        svg = re.sub(r'(<text id="badge-text"[^>]*>)[^<]*(</text>)', rf"\g<1>{badge}\g<2>", svg, count=1)
-        svg = svg.replace('id="badge"', f'id="badge-{name}"').replace('id="badge-text"', f'id="badge-text-{name}"')
+    # The badge is an HTML element over the drawing's corner, on a paper disc, so it
+    # stays legible whatever the drawing does under it; the SVG's own badge group goes.
+    svg = re.sub(r'<g id="badge".*?</g>', "", svg, count=1, flags=re.S)
     cls = "scene muted" if muted else "scene"
-    return f'<div class="{cls}">{svg}</div>'
+    badge_html = f'<span class="badge">{badge}</span>' if badge is not None else ""
+    return f'<div class="{cls}">{svg}{badge_html}</div>'
 
 
 # -------------------------------------------------------------- sections

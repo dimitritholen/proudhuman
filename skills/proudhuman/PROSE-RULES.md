@@ -35,6 +35,7 @@ Skip the slots of a chapter that has no beats (`steering` with an empty `steers`
 - Thin stories are told straight. One prompt and nothing else is one prompt and nothing else.
 - Durations in human units: "27 minutes", "two hours and eighteen minutes", "forty seconds". Never raw seconds.
 - A steer caption sits directly under the quoted excerpt, so it never repeats the quote. It says in your own words what was asked for, then what the build turned to next if there is a consequence. When the excerpt already says everything, the caption is the consequence alone, or a single short sentence.
+- A judgment scene sits under two lines the page already shows: what Claude was about to do or had just said, and your next words. The scene does not repeat either quote; it tells what the moment was and what changed, in at most three sentences.
 - Chapter bodies tell, they do not list. A body that walks every steer with its timestamp is a table in prose; pick the turns that changed the course and let the beats below carry the rest.
 
 ## Output shape

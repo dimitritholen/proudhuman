@@ -11,7 +11,7 @@ import math
 from datetime import datetime, timezone
 from html import escape
 
-W = 880  # drawing width; the page scales it
+W = 736  # drawing width in user units; the page is 46rem wide, so text set at 12 units reads at about 12px
 
 
 def ts(s: str) -> datetime:
@@ -52,13 +52,17 @@ def mark(kind: str, x: float, y: float, title: str, href: str | None = None) -> 
     return f'<a href="{href}">{body}</a>' if href else body
 
 
-def legend(items: list[tuple[str, str]], y: float) -> str:
+def legend(items: list[tuple[str, str]], y: float, width: float) -> tuple[str, int]:
+    """Mark legend, wrapped into rows that fit `width`. Returns (svg, row count)."""
     out = []
-    x = 0.0
+    x, row = 0.0, 0
     for kind, label in items:
-        out.append(f'<g transform="translate({x:.1f},{y:.1f})">{mark(kind, 8, 0, label)}<text class="lgd" x="20" y="4">{escape(label)}</text></g>')
-        x += 24 + 7.2 * len(label) + 18
-    return "".join(out)
+        w = 24 + 6.6 * len(label) + 18
+        if x + w > width and x > 0:
+            x, row = 0.0, row + 1
+        out.append(f'<g transform="translate({x:.1f},{y + row * 20:.1f})">{mark(kind, 8, 0, label)}<text class="lgd" x="20" y="4">{escape(label)}</text></g>')
+        x += w
+    return "".join(out), row + 1
 
 
 # ------------------------------------------------------------- timeline
@@ -68,9 +72,11 @@ def timeline_svg(beats: dict, chrome: dict) -> str:
     sessions = [s for s in sorted(beats["sessions"], key=lambda s: s["first"] or "") if s["first"] and s["last"]]
     if not sessions:
         return ""
-    band_h, gap, top, left, right = 64, 62, 34, 120, 24
+    band_h, gap, top, left, right = 64, 62, 34, 96, 12
     plot_w = W - left - right
-    h = top + len(sessions) * (band_h + gap) + 40
+    legend_items = [(k, chrome["legend"][k]) for k in ("spark", "steer", "question", "judgment", "verification", "commit", "ship")]
+    legend_svg, legend_rows = legend(legend_items, 0, plot_w)
+    h = top + len(sessions) * (band_h + gap) + 20 + 20 * legend_rows
     out = [f'<svg class="chart timeline" viewBox="0 0 {W} {h}" role="img" aria-label="{escape(chrome["timeline"])}"><defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" class="hatch-line"/></pattern></defs>']
 
     events = []
@@ -138,7 +144,7 @@ def timeline_svg(beats: dict, chrome: dict) -> str:
             out.append(mark(kind, x, ys - 12 * min(lift, 2), title, f"#b-{cit}"))
         out.append(f'<line class="thread" x1="{left}" y1="{ys}" x2="{left + plot_w}" y2="{ys}"/>')
 
-    out.append(f'<g transform="translate({left},{h - 10})">{legend([(k, chrome["legend"][k]) for k in ("spark", "steer", "question", "judgment", "verification", "commit", "ship")], 0)}</g>')
+    out.append(f'<g transform="translate({left},{h - 20 * legend_rows + 6})">{legend_svg}</g>')
     out.append("</svg>")
     return "".join(out)
 
@@ -169,8 +175,8 @@ def composition_svg(beats: dict, chrome: dict) -> str:
         return ""
     files = sorted(comp["files"], key=lambda f: (-f["added"], f["path"]))[:8]
     biggest = max((f["added"] for f in files), default=1) or 1
-    left, right, row_h, gap = 300, 70, 16, 10
-    legend_rows = legend_layout([chrome["comp_legend"][s] for s in SEGMENTS], W - left - right)
+    left, right, row_h, gap = 168, 48, 16, 10
+    legend_rows = legend_layout([chrome["comp_legend"][s] for s in SEGMENTS], W - 24)
     h = 28 + 30 + 22 + len(files) * (row_h + gap) + 24 + 20 * len(legend_rows)
     out = [f'<svg class="chart composition" viewBox="0 0 {W} {h}" role="img" aria-label="{escape(chrome["composition"])}">']
     bw = W - left - right
@@ -180,14 +186,17 @@ def composition_svg(beats: dict, chrome: dict) -> str:
     for f in files:
         name = f["path"].split("/")[-1]
         w = bw * f["added"] / biggest
-        out.append(f'<text class="row-label" x="{left - 12}" y="{y + 12}" text-anchor="end"><title>{escape(f["path"])}</title>{escape(name[:38])}</text>')
+        out.append(f'<text class="row-label" x="{left - 12}" y="{y + 12}" text-anchor="end"><title>{escape(f["path"])}</title>{escape(name if len(name) <= 22 else "…" + name[-21:])}</text>')
         out.append(_bar(left, y, w, row_h, f, f["added"], chrome))
         out.append(f'<text class="row-count" x="{left + w + 8:.1f}" y="{y + 12}">{f["added"]}</text>')
         y += row_h + gap
     ly = y + 14
     for row in legend_rows:
+        # centre each legend row under the chart
+        row_w = row[-1][2] + 20 + 6.4 * len(row[-1][1]) if row else 0
+        x0 = (W - row_w) / 2
         for seg, label, lx in row:
-            out.append(f'<rect class="seg seg-{seg}" x="{left + lx:.1f}" y="{ly}" width="14" height="14" rx="2"/><text class="lgd" x="{left + lx + 20:.1f}" y="{ly + 11}">{escape(label)}</text>')
+            out.append(f'<rect class="seg seg-{seg}" x="{x0 + lx:.1f}" y="{ly}" width="14" height="14" rx="2"/><text class="lgd" x="{x0 + lx + 20:.1f}" y="{ly + 11}">{escape(label)}</text>')
         ly += 20
     out.append("</svg>")
     return "".join(out)
@@ -216,7 +225,7 @@ def judgment_strip_svg(beats: dict, chrome: dict) -> str:
         return ""
     h = 70
     out = [f'<svg class="chart strip" viewBox="0 0 {W} {h}" role="img" aria-label="{escape(chrome["judgment_strip"])}">']
-    left, right = 24, 24
+    left, right = 20, 20
     n = len(js)
     step = (W - left - right) / max(n, 1)
     out.append(f'<line class="thread" x1="{left}" y1="30" x2="{W - right}" y2="30"/>')
