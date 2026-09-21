@@ -1,9 +1,9 @@
 {
   "media_type": "image/svg+xml",
   "usage": {
-    "prompt_tokens": 230,
+    "prompt_tokens": 233,
     "completion_tokens": 4175,
-    "total_tokens": 4405,
+    "total_tokens": 4408,
     "cost": 0.08,
     "is_byok": false,
     "prompt_tokens_details": {

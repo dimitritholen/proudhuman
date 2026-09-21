@@ -248,9 +248,11 @@ def write_preview(names: list[str]) -> Path:
 
 
 LOGO_PROMPT = (
-    "A round emblem: an open human hand, palm up, holding a single small burning match whose flame gives off a few short "
-    "rays of light. Seen slightly from above, the hand drawn with confident engraved hatching, the flame the brightest point. "
-    "Nothing else in the frame, no ring, no text, no border. " + STYLE.replace("composed for a wide landscape 16:9 picture", "composed for a square picture")
+    "A bare human forearm and hand entering from the upper left, gently patting "
+    "the top of a small friendly blocky creature the way you pat a good dog. The creature is a rounded square body with two small dot "
+    "eyes and two short stubby legs, sitting contentedly on the ground, looking up. Below the pair, the words \"proud human\" "
+    "hand-lettered in the same ink, lowercase, in a warm, slightly uneven handwritten script, spelled exactly: proud human. "
+    "The picture holds only three things: the arm, the creature, and the two lettered words. " + STYLE.replace("composed for a wide landscape 16:9 picture", "composed for a square picture, the drawing above and the two words below")
 )
 LOGO_COLOURS = {"light": ("#1F5E9E", "#FFFFFF"), "dark": ("#5296DB", "#0D1117")}
 
