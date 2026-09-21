@@ -248,13 +248,14 @@ def write_preview(names: list[str]) -> Path:
 
 
 LOGO_PROMPT = (
-    "A bare human forearm entering from the left edge of the picture, nearly horizontal, the hand resting flat on top of a small "
-    "pixel-art creature and patting it the way you pat a good dog. The creature is exactly the one in the reference image, redrawn as ink "
-    "line art: a wide rectangular body of square pixels, wider than it is tall, two square eyes, a short straight horizontal mouth, "
-    "a small square arm nub on each side, and two short rectangular legs; it stands on the ground looking straight ahead. "
-    "Below the pair, the words \"proud human\" hand-lettered in the same ink, lowercase, in a warm, slightly uneven handwritten script, "
-    "spelled exactly: proud human. The picture holds only three things: the arm, the creature, and the two lettered words. "
-    "The whole composition is wide and low. " + STYLE.replace("composed for a wide landscape 16:9 picture", "composed for a landscape 4:3 picture, the drawing above and the two words below")
+    "Only a human forearm and hand, cut off just below the elbow, hovering horizontally above a small pixel-art creature, the hand "
+    "resting flat on its head and patting it the way you pat a good dog. The creature is drawn as ink line art: a wide rectangular body "
+    "of square pixels, wider than it is tall, two square eyes, a small square arm nub on each side, and two short rectangular legs; "
+    "it smiles, a small pixel smile, and looks up at the hand. Directly below the pair, the words \"proud human\" hand-lettered large in the "
+    "same ink, lowercase, in a warm, slightly uneven handwritten script, spelled exactly: proud human, stretching the full width of the "
+    "drawing above so the lettering and the drawing are equally wide. The picture holds only three things: the forearm, the creature, and "
+    "the two lettered words. No shoulder, no body, no ground line. The whole composition is wide and low. "
+    + STYLE.replace("composed for a wide landscape 16:9 picture", "composed for a landscape 4:3 picture, the drawing above and the two words below")
 )
 LOGO_COLOURS = {"light": ("#1F5E9E", "#FFFFFF"), "dark": ("#5296DB", "#0D1117")}
 
