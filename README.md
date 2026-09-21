@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/logo-dark.svg">
-    <img src="docs/logo-light.svg" width="220" alt="A hand holding a lit match">
+    <img src="docs/logo-light.svg" width="360" alt="A human hand patting the small pixel creature on the head, with proud human lettered beneath">
   </picture>
 </p>
 

@@ -248,22 +248,28 @@ def write_preview(names: list[str]) -> Path:
 
 
 LOGO_PROMPT = (
-    "A bare human forearm and hand entering from the upper left, gently patting "
-    "the top of a small friendly blocky creature the way you pat a good dog. The creature is a rounded square body with two small dot "
-    "eyes and two short stubby legs, sitting contentedly on the ground, looking up. Below the pair, the words \"proud human\" "
-    "hand-lettered in the same ink, lowercase, in a warm, slightly uneven handwritten script, spelled exactly: proud human. "
-    "The picture holds only three things: the arm, the creature, and the two lettered words. " + STYLE.replace("composed for a wide landscape 16:9 picture", "composed for a square picture, the drawing above and the two words below")
+    "A bare human forearm entering from the left edge of the picture, nearly horizontal, the hand resting flat on top of a small "
+    "pixel-art creature and patting it the way you pat a good dog. The creature is exactly the one in the reference image, redrawn as ink "
+    "line art: a wide rectangular body of square pixels, wider than it is tall, two square eyes, a short straight horizontal mouth, "
+    "a small square arm nub on each side, and two short rectangular legs; it stands on the ground looking straight ahead. "
+    "Below the pair, the words \"proud human\" hand-lettered in the same ink, lowercase, in a warm, slightly uneven handwritten script, "
+    "spelled exactly: proud human. The picture holds only three things: the arm, the creature, and the two lettered words. "
+    "The whole composition is wide and low. " + STYLE.replace("composed for a wide landscape 16:9 picture", "composed for a landscape 4:3 picture, the drawing above and the two words below")
 )
 LOGO_COLOURS = {"light": ("#1F5E9E", "#FFFFFF"), "dark": ("#5296DB", "#0D1117")}
 
 
-def generate_logo(reprocess: bool) -> None:
+def generate_logo(reprocess: bool, ref: Path | None = None) -> None:
     """The README logo: same drawing, two files with explicit colours for GitHub's light and dark themes."""
     raw_f = RAW / "logo.svg"
     if reprocess and raw_f.is_file():
         svg = raw_f.read_text(encoding="utf-8")
     else:
-        body = {"model": MODEL, "prompt": LOGO_PROMPT, "n": 1, "aspect_ratio": "1:1", "output_format": "svg"}
+        body = {"model": MODEL, "prompt": LOGO_PROMPT, "n": 1, "aspect_ratio": "4:3", "output_format": "svg"}
+        if ref is not None:
+            mime = "image/png" if ref.suffix.lower() == ".png" else "image/jpeg"
+            data_url = f"data:{mime};base64," + base64.b64encode(ref.read_bytes()).decode("ascii")
+            body["input_references"] = [{"type": "image_url", "image_url": {"url": data_url}}]
         req = urllib.request.Request(ENDPOINT, data=json.dumps(body).encode("utf-8"), headers={"Authorization": f"Bearer {api_key()}", "Content-Type": "application/json", "HTTP-Referer": "https://github.com/dimitritholen/proudhuman", "X-Title": "proudhuman"})
         try:
             with urllib.request.urlopen(req, timeout=240) as resp:
@@ -280,8 +286,7 @@ def generate_logo(reprocess: bool) -> None:
     del SCENES["logo"]
     # square box instead of the chapter box, no badge
     processed = re.sub(r'<g id="badge".*?</g>', "", processed, count=1, flags=re.S)
-    # the drawing is centred at (160,100) inside the chapter box; crop a square around it
-    processed = processed.replace('viewBox="0 0 320 200"', 'viewBox="60 0 200 200"', 1)
+    # the logo keeps the wide chapter box; the drawing is fitted and centred inside it
     docs = ROOT / "docs"
     docs.mkdir(exist_ok=True)
     for theme, (ink, paper) in LOGO_COLOURS.items():
@@ -294,7 +299,8 @@ def generate_logo(reprocess: bool) -> None:
 def main(argv: list[str]) -> int:
     reprocess = "--reprocess" in argv
     if "--logo" in argv:
-        generate_logo(reprocess)
+        ref = next((Path(a) for a in argv if a.lower().endswith((".png", ".jpg", ".jpeg"))), None)
+        generate_logo(reprocess, ref)
         return 0
     names = [a for a in argv if a in SCENES] or list(SCENES)
     (OUT / "recraft").mkdir(parents=True, exist_ok=True)
