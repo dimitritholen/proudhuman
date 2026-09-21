@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-labelledby="title">
+<title id="title">What the Record Cannot See</title>
+<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M150,24 V41"/>
+<path d="M136,58 C136,36 164,36 164,58"/>
+<path d="M138,66 C138,56 162,56 162,66"/>
+<path d="M132,66 H168"/>
+<path d="M138,66 C130,82 130,110 138,124"/>
+<path d="M162,66 C170,82 170,110 162,124"/>
+<path d="M132,124 H168"/>
+<path d="M136,124 C132,132 132,138 138,140 H162 C168,138 168,132 164,124"/>
+<path d="M150,106 C143,100 145,88 150,82 C155,88 157,100 150,106 Z" fill="currentColor"/>
+<path d="M150,106 V112"/>
+<path d="M197.5,89.3 A48,48 0 0 1 197.5,102.7"/>
+<path d="M188.3,124.9 A48,48 0 0 1 178.9,134.3"/>
+<path d="M156.7,143.5 A48,48 0 0 1 143.3,143.5"/>
+<path d="M121.1,134.3 A48,48 0 0 1 111.7,124.9"/>
+<path d="M102.5,102.7 A48,48 0 0 1 102.5,89.3"/>
+<path d="M111.7,67.1 A48,48 0 0 1 121.1,57.7"/>
+<path d="M178.9,57.7 A48,48 0 0 1 188.3,67.1"/>
+<path d="M36,112 c10,-5 18,-5 28,0 s18,5 28,0"/>
+<path d="M228,112 c10,-5 18,-5 28,0 s18,5 28,0"/>
+<path d="M56,152 c10,-4 20,-4 30,0 s20,4 30,0"/>
+<path d="M204,154 c10,-4 20,-4 30,0 s20,4 30,0"/>
+<path d="M96,174 c10,-4 20,-4 30,0"/>
+<path d="M176,176 c10,-4 20,-4 30,0"/>
+<path d="M52,72 c10,-4 20,-4 30,0"/>
+<path d="M214,74 c10,-4 20,-4 30,0"/>
+</g>
+<g id="badge" transform="translate(276,24)"><circle r="16" fill="none" stroke="currentColor" stroke-width="1.5"/><text id="badge-text" text-anchor="middle" dominant-baseline="central" font-family="inherit" font-size="14" fill="currentColor"></text></g>
+</svg>

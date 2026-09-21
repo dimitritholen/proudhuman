@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-labelledby="title">
+<title id="title">The Steering</title>
+<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M44,106 C70,76 96,66 118,63"/>
+<path d="M150,61 C180,60 210,61 236,64"/>
+<path d="M44,106 C80,146 170,152 236,148"/>
+<path d="M236,64 C246,90 246,122 236,148"/>
+<path d="M236,104 H264"/>
+<path d="M118,100 C112,100 112,108 118,108"/>
+<path d="M118,100 H140"/>
+<path d="M118,108 H142"/>
+<path d="M194,100 H236"/>
+<path d="M192,108 H236"/>
+<path d="M116,30 L154,68"/>
+<path d="M100,46 L138,84"/>
+<path d="M154,68 C172,66 190,78 192,98"/>
+<path d="M138,84 C138,96 140,106 144,112"/>
+<path d="M192,98 C198,106 198,118 190,120 C184,122 180,116 178,114 C176,120 168,122 164,116 C162,122 154,122 152,116 C150,120 144,118 144,112"/>
+<path d="M144,96 C154,90 170,88 180,94 C186,97 184,102 180,104"/>
+<path d="M254,78 h26"/>
+<path d="M258,128 h24"/>
+<path d="M250,152 h22"/>
+<path d="M70,166 h40"/>
+<path d="M140,170 h60"/>
+<path d="M226,168 h40"/>
+<path d="M60,44 h34"/>
+<path d="M170,40 h50"/>
+</g>
+<g id="badge" transform="translate(276,24)"><circle r="16" fill="none" stroke="currentColor" stroke-width="1.5"/><text id="badge-text" text-anchor="middle" dominant-baseline="central" font-family="inherit" font-size="14" fill="currentColor"></text></g>
+</svg>

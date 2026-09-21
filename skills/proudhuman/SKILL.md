@@ -1,51 +1,75 @@
 ---
 name: proudhuman
-description: Map the human's role in a pull request or branch from the Claude Code transcripts that produced it. Use when the user asks what they actually did on a PR, who is accountable for a change, whether a PR was reviewed by a human, how much of a branch the AI wrote, to run proudhuman, or for a self-review of their AI-assisted work.
+description: Tell the story of a pull request or branch from the Claude Code transcripts that produced it, with the human's steering as the subject. Use when the user asks what they actually did on a PR, who is accountable for a change, whether a PR was reviewed by a human, how much of a branch the AI wrote, for a story or self-review of their AI-assisted work, or to run proudhuman.
 ---
 
 # proudhuman
 
-Reads the Claude Code session transcripts that worked on a branch, plus the branch's git range, and writes a private markdown report: the accountable human and how the merge happened, every human turn and action, added lines with no origin in AI-emitted text, and prompts that were verbatim earlier AI output.
+One PR, one story: a self-contained HTML page in six chapters (the Spark, the Steering, Moments of Judgment, the Build, the Ship, What the Record Cannot See), with the human's turns as the subject and Claude's build as the material. Two passes of a script and one subagent produce it. The model never writes HTML; it writes prose into slots.
 
-The report is self-review material for the person whose transcripts it reads. Present it in a flat tone, with transcript references, and with the report's own wording for absence: "no evidence of review", never "not reviewed".
+The story is self-review material for the person whose transcripts it reads. Present it in a flat tone. Where the record holds little of the human, the story says so; keep that wording when you relay it: "the record holds no evidence of", never "you did not".
 
 ## 1. Resolve the target
 
 Repository: the current working directory unless the user names another path.
 
-- PR number given: use `--pr N`. The script finds the `Merge pull request #N` commit on the trunk (`main`, falling back to `master`; pass `--base` for another trunk). Squash-merged PRs leave no such commit; use the branch form instead.
-- Branch name given, or the user is on a feature branch and names no PR: use `--branch NAME --base <trunk>`.
+- PR number given: `--pr N`. The script finds the `Merge pull request #N` commit on the trunk (`main`, falling back to `master`; `--base` for another trunk). Squash-merged PRs leave no such commit; use the branch form.
+- Branch name given, or the user is on a feature branch and names no PR: `--branch NAME --base <trunk>`.
 - On the trunk with no PR named: ask which PR or branch.
+- Language: `--lang nl` when the user asks for Dutch; English otherwise. Accent colour: `--accent '#hex'` only when asked.
 
-Done when you have one command line to run.
+Done when you have one `analyze` command line.
 
-## 2. Run the script
+## 2. Analyze
 
-Python 3.10 or newer, no dependencies. The script lives in `scripts/` under this skill's base directory.
+Python 3.10 or newer, no dependencies. Scripts live in `scripts/` under this skill's base directory.
 
 ```
-python <skill base directory>/scripts/proudhuman.py --repo <repo> --pr <N>
-python <skill base directory>/scripts/proudhuman.py --repo <repo> --branch <name> --base <trunk>
+python <skill base directory>/scripts/proudhuman.py analyze --repo <repo> --pr <N> [--lang nl]
 ```
 
-It prints the report and writes it to `~/.proudhuman/<repo>/<pr>.md`. Reports stay outside the repository.
+It prints `wrote <story dir>/beats.json` and a one-line count of sessions, steers, judgments, verifications, pass-throughs and ship status. The story directory is `~/.proudhuman/<repo>/pr<N>/`.
 
-Done when the script prints `wrote <path>`. An exit with `no merge commit` or `no commits in range` means step 1 chose the wrong form; switch form and rerun once.
+An exit saying `no session matched` means no transcript on this machine worked on that branch: report that sentence to the user and stop; there is no story to tell. `no merge commit` or `no commits in range` means step 1 chose the wrong form; switch form and rerun once.
 
-## 3. Relay the findings
+Done when `beats.json` exists.
 
-From the report, give the user, in this order, each with the transcript reference (`session:line`) the report prints beside it:
+## 3. Write the prose
 
-1. **Accountable human**: commit author, how the merge happened (human `!` command, AI tool call and its result, GitHub UI, or not found), and who ran each commit.
-2. **Human turns**: the counts table, then the typed turns with their dwell times, and every interrupt, rejection, shell command, and file the human touched between AI edits.
-3. **Pass-through prompts**: each prompt that originates in earlier AI output, with the session and line it came from.
-4. **Lines with no origin**: the totals row, the moved-code count, and the sample. Say what the README says about that column: shell transformations and formatters land there too, so it is a sample to inspect, not a count of hand-written lines.
-5. **What the evidence supports**: the report's closing bullets, verbatim in substance.
+Dispatch the `prose-writer` agent shipped with this plugin (its `subagent_type` is `proudhuman:prose-writer`) with exactly these paths, nothing else from your context:
 
-When no session matched, relay only that: nothing can be said about the human's role from Claude Code data.
+- the rules: `<skill base directory>/PROSE-RULES.md`
+- the slots: `<skill base directory>/scripts/slots.json`
+- the glossary: `<plugin root>/CONTEXT.md`
+- the beats: `<story dir>/beats.json`
+- the output: `<story dir>/prose.json`
 
-Done when all five items are relayed and the report path is named once.
+Tell it the language from step 1. Wait for its report.
+
+Done when `prose.json` exists.
+
+## 4. Render
+
+```
+python <skill base directory>/scripts/proudhuman.py render <story dir>
+```
+
+It prints `wrote <story dir>/story.html`. Rendering needs no model and can be rerun at any time. A slot the writer missed or overran shows as a visible "Unwritten" block in the page; if the report from step 3 or a grep for `class="unwritten"` shows any, send the writer back for those slots once, then render again.
+
+Done when `story.html` exists with no unwritten block, or with the unwritten blocks named to the user.
+
+## 5. Present
+
+Give the user, in this order:
+
+1. The path of `story.html`, and that it opens offline in any browser and prints with one chapter per page.
+2. The story's title.
+3. The accountable human and how the ship happened, from the beats: commit author, merger, and the merge attempts with who ran them and their outcome.
+4. Counts from the analyze line: steers, judgments, verifications, pass-throughs.
+5. Presence from `beats.json`: time at the keyboard across sessions, phrased as presence.
+
+Nothing else. The story is the deliverable; the summary points at it.
 
 ## Reference
 
-Signal definitions, how each column is derived, and the limits of every signal: `README.md` at the plugin root. Read it before answering a question about what a number means or why a line shows no origin.
+What each beat means, how each chart is derived, and the limits of every signal: `README.md` at the plugin root. Read it before answering a question about what a number means or why a line shows no origin.

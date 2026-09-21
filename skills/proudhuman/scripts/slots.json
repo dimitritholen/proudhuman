@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "description": "The prose slots of a story. prose.json carries exactly these keys; the renderer validates each against its bound and renders an unwritten block for any slot that is missing, empty, or over its bound. Per-beat slots are keyed by the beat's citation.",
+  "title": {"kind": "line", "max_words": 8, "fallback": "pr.subject"},
+  "chapters": {
+    "spark": {"lede": {"max_words": 40}, "body": {"max_words": 180}},
+    "steering": {"lede": {"max_words": 40}, "body": {"max_words": 220}},
+    "judgment": {"lede": {"max_words": 40}, "body": {"max_words": 180}},
+    "build": {"lede": {"max_words": 40}, "body": {"max_words": 200}},
+    "ship": {"lede": {"max_words": 40}, "body": {"max_words": 140}},
+    "unseen": {"lede": {"max_words": 40}, "body": {"max_words": 160}}
+  },
+  "per_beat": {
+    "steer_caption": {"keyed_by": "steers[].citation", "kind": "sentence", "max_words": 30},
+    "judgment_scene": {"keyed_by": "judgments[].citation", "kind": "paragraph", "max_words": 90}
+  },
+  "thin": {
+    "description": "When a chapter has no beats, its slots are not written by the model; the renderer uses these fixed sentences.",
+    "steering": {"en": "The record holds no steer after the spark.", "nl": "Het verslag bevat geen bijsturing na de vonk."},
+    "judgment": {"en": "The record holds no moment where you overruled Claude.", "nl": "Het verslag bevat geen moment waarop je Claude overstemde."}
+  }
+}

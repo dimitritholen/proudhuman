@@ -1,0 +1,23 @@
+{
+  "title": "One Spark, Five Commits, No Steer",
+  "chapters": {
+    "spark": {
+      "lede": "At 08:35 on 31 August you opened the session with a 4,743-character hand-off brief, and it was the only turn you typed. The text originated in Claude's own earlier output, a file written in an earlier session.",
+      "body": "The spark began: \"Pick up the tasqx daemon field test where the 2026-08-31 session left it.\" What followed was a hand-off in full: the state of PR #12, the driving record in tasqx, the eleven findings of the field test, the rig that was gone, the order in which to read, the order in which the findings argued to be fixed, and the rules that were binding the day before and still were. The text originated in Claude's own earlier output: the content of a Write call to docs/reviews/NEXT-daemon-fixes-prompt.md, in session 3ee0a556 at line 805.\n\nTwo of its lines name what the first commits carried. Finding #245, the shutdown that committed a write it never answered, was singled out as the one that mattered, to land test-first against the reproduction and not only the in-crate test. And #252 with #247 were to be one ruling, not two: wire the socket routing the spec described, or correct the spec and stop accepting the flag.\n\nAfter this turn the record holds no other typed word from you."
+    },
+    "build": {
+      "lede": "Five commits in forty-three minutes, all run by Claude, three of them stamped with a new design ruling. Every added line but 21 traces to text Claude emitted through a tool.",
+      "body": "Claude's first commit came twenty minutes after the spark, at 08:55: the shutdown that exited before its writers drained, and the teardown that closed without a word. Ten minutes later, D73: the socket flag four verbs accepted and discarded, and the spec that routed MCP through a socket nobody wired. At 09:27, D74, the store nobody could name. At 09:38, two commits one second apart: the banner that preceded its own bind, and D75, the schema that read as the inverse of the server, the one that gives the pull request its name. Each ran through a Bash call within a second of its timestamp.\n\nAfter 09:39 the tool calls stopped for an hour and ten minutes, then resumed at 10:50 for the run-up to the merge.\n\nThe diff added 942 lines. 921 were emitted by Claude through a tool; none were moved. 21 have no origin the record can name, hand-written, formatter output, or a shell transformation Claude ran; a sample to inspect, not a count of anything you typed. Iterations: 3 tool errors, 31 runs of the tests, five files edited more than twice, daemon.rs the most at 18 and DESIGN.md at 16."
+    },
+    "ship": {
+      "lede": "Merged at 11:04:32 by GitHub. Claude tried twice in the five minutes before, and neither try landed: the first was told the requirements were not met, the second was blocked before it ran.",
+      "body": "At 10:59:28, five minutes before the merge, Claude ran gh pr merge 13 --merge --delete-branch. The command returned without error, but what it printed said the pull request would merge only after all the requirements had been met, and offered the --auto flag. Twenty-five seconds later Claude tried again with --admin. That call never reached GitHub: the Claude Code auto mode classifier denied it, giving \"Blocked by classifier\" as the reason.\n\nFour minutes and thirty-nine seconds after that, the pull request was merged, with GitHub as the recorded merger. The sessions hold no turn of yours around that moment and no command that could have pressed it. The accountable human is the commit author, Dimitri Tholen, together with whoever pressed merge; the record names only GitHub."
+    },
+    "unseen": {
+      "lede": "Two hours and three minutes at the keyboard in one session, by the record's measure, and a single typed turn in all of it.",
+      "body": "The record measures two hours and three minutes of presence in one session. Against that it sets one typed turn, the spark, and that turn's text came from a file Claude had written before.\n\nThe record holds no evidence of how you read the hand-off before it became the spark, or of what you compared against it once the session ran. It holds no evidence of you watching five commits land, of what filled the stretch in which the tool calls fell silent, or of what you did while Claude's two merge attempts came back short. It holds no evidence of who pressed merge, or of whether you read the pull request before it went in.\n\nReading, thinking and silent deciding leave no line in a transcript. Where the record holds little of you, the story says so: one turn, and nothing else."
+    }
+  },
+  "steer_captions": {},
+  "judgment_scenes": {}
+}

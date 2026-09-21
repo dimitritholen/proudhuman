@@ -1,0 +1,22 @@
+{
+  "media_type": "image/svg+xml",
+  "usage": {
+    "prompt_tokens": 125,
+    "completion_tokens": 4175,
+    "total_tokens": 4300,
+    "cost": 0.08,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.08,
+      "upstream_inference_prompt_cost": 0,
+      "upstream_inference_completions_cost": 0.08
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 4175
+    }
+  }
+}

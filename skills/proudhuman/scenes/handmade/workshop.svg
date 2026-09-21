@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-labelledby="title">
+<title id="title">The Build</title>
+<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M48,114 H272 V122 H48 Z"/>
+<path d="M62,122 V168"/>
+<path d="M76,122 V168"/>
+<path d="M244,122 V168"/>
+<path d="M258,122 V168"/>
+<path d="M76,148 H244"/>
+<path d="M104,78 C106,100 130,112 160,112 C190,112 214,104 222,82"/>
+<path d="M104,78 C130,84 196,84 222,82"/>
+<path d="M108,90 C124,96 142,99 160,99"/>
+<path d="M112,102 C128,107 144,109 160,109"/>
+<path d="M176,84 C174,94 174,104 178,110"/>
+<path d="M192,84 C190,94 190,104 194,110"/>
+<path d="M208,83 C206,92 206,98 210,104"/>
+<path d="M56,100 H80 V114 H56 Z"/>
+<path d="M68,100 V72"/>
+<path d="M228,102 H262 V112 H228 Z"/>
+<path d="M232,102 C232,94 242,94 242,102"/>
+<path d="M254,102 C255,94 262,94 262,102"/>
+<path d="M248,102 L254,90"/>
+<path d="M106,164 c-4,-12 14,-14 12,-3 c-1,6 -9,6 -8,0 c1,-3 4,-3 4,-1"/>
+<path d="M188,166 c-4,-12 14,-14 12,-3 c-1,6 -9,6 -8,0 c1,-3 4,-3 4,-1"/>
+</g>
+<g id="badge" transform="translate(276,24)"><circle r="16" fill="none" stroke="currentColor" stroke-width="1.5"/><text id="badge-text" text-anchor="middle" dominant-baseline="central" font-family="inherit" font-size="14" fill="currentColor"></text></g>
+</svg>

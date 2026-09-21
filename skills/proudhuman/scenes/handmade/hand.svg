@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-labelledby="title">
+<title id="title">Moments of Judgment</title>
+<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M118,176 L118,148 C112,140 100,130 94,120 C88,112 92,102 100,106 C108,112 118,124 124,130 L122,66 C122,58 138,58 138,66 L138,104 L140,50 C140,42 156,42 156,50 L158,104 L160,56 C160,48 176,48 176,56 L178,108 L182,82 C182,74 198,74 198,82 L198,150 C198,160 196,168 194,176"/>
+<path d="M126,132 C118,142 116,156 118,170"/>
+<path d="M134,124 C146,132 160,134 176,128"/>
+<path d="M130,144 C146,152 164,150 180,140"/>
+</g>
+<g id="badge" transform="translate(276,24)"><circle r="16" fill="none" stroke="currentColor" stroke-width="1.5"/><text id="badge-text" text-anchor="middle" dominant-baseline="central" font-family="inherit" font-size="14" fill="currentColor"></text></g>
+</svg>

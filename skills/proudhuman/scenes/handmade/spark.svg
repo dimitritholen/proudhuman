@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-labelledby="title">
+<title id="title">The Spark</title>
+<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M207,157 L144,92"/>
+<path d="M200,164 L136,98"/>
+<path d="M207,157 L200,164"/>
+<path d="M144,92 C152,84 148,72 136,74 C125,76 124,92 130,97 C132,99 134,99 136,98 Z" fill="currentColor"/>
+<path d="M137,61 V45"/>
+<path d="M120,68 L109,57"/>
+<path d="M113,85 H97"/>
+<path d="M120,102 L109,113"/>
+<path d="M154,68 L165,57"/>
+<path d="M161,85 H177"/>
+<path d="M118.6,40.6 L117,37"/>
+<path d="M155.4,40.6 L157,37"/>
+<path d="M92.6,66.6 L89,65"/>
+<path d="M181.4,66.6 L185,65"/>
+</g>
+<g id="badge" transform="translate(276,24)"><circle r="16" fill="none" stroke="currentColor" stroke-width="1.5"/><text id="badge-text" text-anchor="middle" dominant-baseline="central" font-family="inherit" font-size="14" fill="currentColor"></text></g>
+</svg>

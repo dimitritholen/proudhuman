@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-labelledby="title">
+<title id="title">The Ship</title>
+<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M40,92 H132 V100 H40"/>
+<path d="M58,92 V100"/>
+<path d="M76,92 V100"/>
+<path d="M94,92 V100"/>
+<path d="M112,92 V100"/>
+<path d="M124,92 V82"/>
+<path d="M120,82 H128"/>
+<path d="M56,100 V140"/>
+<path d="M116,100 V142"/>
+<path d="M162,120 L176,142 H244 L258,120 Z"/>
+<path d="M166,126 H254"/>
+<path d="M186,120 L210,84 L234,120"/>
+<path d="M210,84 L218,120"/>
+<path d="M48,146 h20"/>
+<path d="M106,146 h22"/>
+<path d="M144,146 h30"/>
+<path d="M246,146 h32"/>
+<path d="M70,158 h40"/>
+<path d="M140,158 h60"/>
+<path d="M226,158 h34"/>
+<path d="M100,170 h50"/>
+<path d="M180,170 h40"/>
+<path d="M130,182 h30"/>
+</g>
+<g id="badge" transform="translate(276,24)"><circle r="16" fill="none" stroke="currentColor" stroke-width="1.5"/><text id="badge-text" text-anchor="middle" dominant-baseline="central" font-family="inherit" font-size="14" fill="currentColor"></text></g>
+</svg>
