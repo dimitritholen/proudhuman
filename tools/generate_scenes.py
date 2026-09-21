@@ -247,8 +247,53 @@ def write_preview(names: list[str]) -> Path:
     return out
 
 
+LOGO_PROMPT = (
+    "A round emblem: an open human hand, palm up, holding a single small burning match whose flame gives off a few short "
+    "rays of light. Seen slightly from above, the hand drawn with confident engraved hatching, the flame the brightest point. "
+    "Nothing else in the frame, no ring, no text, no border. " + STYLE.replace("composed for a wide landscape 16:9 picture", "composed for a square picture")
+)
+LOGO_COLOURS = {"light": ("#1F5E9E", "#FFFFFF"), "dark": ("#5296DB", "#0D1117")}
+
+
+def generate_logo(reprocess: bool) -> None:
+    """The README logo: same drawing, two files with explicit colours for GitHub's light and dark themes."""
+    raw_f = RAW / "logo.svg"
+    if reprocess and raw_f.is_file():
+        svg = raw_f.read_text(encoding="utf-8")
+    else:
+        body = {"model": MODEL, "prompt": LOGO_PROMPT, "n": 1, "aspect_ratio": "1:1", "output_format": "svg"}
+        req = urllib.request.Request(ENDPOINT, data=json.dumps(body).encode("utf-8"), headers={"Authorization": f"Bearer {api_key()}", "Content-Type": "application/json", "HTTP-Referer": "https://github.com/dimitritholen/proudhuman", "X-Title": "proudhuman"})
+        try:
+            with urllib.request.urlopen(req, timeout=240) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            raise SystemExit(f"logo: HTTP {e.code}: {e.read().decode('utf-8', 'replace')[:300]}")
+        item = (data.get("data") or [{}])[0]
+        svg = base64.b64decode(item["b64_json"]).decode("utf-8")
+        RAW.mkdir(parents=True, exist_ok=True)
+        raw_f.write_text(svg, encoding="utf-8")
+        (RAW / "logo.meta.json").write_text(json.dumps({"media_type": item.get("media_type"), "usage": data.get("usage")}, indent=2), encoding="utf-8")
+    SCENES["logo"] = ("proudhuman", "")
+    processed = postprocess("logo", svg)
+    del SCENES["logo"]
+    # square box instead of the chapter box, no badge
+    processed = re.sub(r'<g id="badge".*?</g>', "", processed, count=1, flags=re.S)
+    # the drawing is centred at (160,100) inside the chapter box; crop a square around it
+    processed = processed.replace('viewBox="0 0 320 200"', 'viewBox="60 0 200 200"', 1)
+    docs = ROOT / "docs"
+    docs.mkdir(exist_ok=True)
+    for theme, (ink, paper) in LOGO_COLOURS.items():
+        themed = processed.replace('"currentColor"', f'"{ink}"').replace('"var(--paper, #fff)"', f'"{paper}"')
+        out = docs / f"logo-{theme}.svg"
+        out.write_text(themed, encoding="utf-8", newline="\n")
+        print(f"logo {theme}: {len(themed.encode('utf-8'))} bytes -> {out.relative_to(ROOT)}")
+
+
 def main(argv: list[str]) -> int:
     reprocess = "--reprocess" in argv
+    if "--logo" in argv:
+        generate_logo(reprocess)
+        return 0
     names = [a for a in argv if a in SCENES] or list(SCENES)
     (OUT / "recraft").mkdir(parents=True, exist_ok=True)
     if "--preview" in argv:
